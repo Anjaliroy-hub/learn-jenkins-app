@@ -11,10 +11,13 @@ pipeline {
             }
             steps {
                sh '''
-               ls -la
-               node --version
-               npm --version
+               echo "Cleaning up node_modules..."
+               rm -rf node_modules
+               echo "Cleaning npm cache..."
+               npm cache clean --force
+               echo "Installing dependencies..."
                npm ci
+               echo "Running build..."
                npm run build
                ls -la
                '''
