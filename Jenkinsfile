@@ -54,6 +54,7 @@ pipeline {
                 sh 'test -f build/index.html'
                 sh 'npm test'
             }
+        }
             stage ('E2E') {
             agent {
                 docker {
