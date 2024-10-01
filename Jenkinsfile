@@ -3,7 +3,7 @@ pipeline {
 
     stages {
         
-       /* stage('build') {
+        stage('build') {
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -41,7 +41,7 @@ pipeline {
                 '''
             }
         }
-        */
+        }
 
         stage ('test') {
             agent {
@@ -55,23 +55,27 @@ pipeline {
                 sh 'npm test'
             }
         }
-            stage ('E2E') {
+
+        stage ('deploy') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.47.1-noble'
+                    image 'node:18-alpine'
                     reuseNode true
                 }
             }
             steps {
                 sh '''
-                npm install serve
-                node_modules/.bin/serve -s build &
-                sleep 10
-                npx playwright test
+                npm install netlify-cli -g
+                netlify --version
                 '''
-            }
 
         }
+        
+
+            
+        
+
+        
     }
     }
 
